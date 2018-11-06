@@ -18,10 +18,8 @@ app.use((req, res, next)=>{
     next();
 })
 
-app.use("*", isLocal)
 
 app.use("/api/kiln", kilnController);
-
 app.use("*", express.static('app/public'))
 
 const server = app.listen(port, console.log(new Date() + ": server running on port: " + port));

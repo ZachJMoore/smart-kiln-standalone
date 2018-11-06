@@ -10,7 +10,7 @@ const Kiln = require('../lib/kiln');
 const Gpio = require('onoff').Gpio;
 const relayOne = new Gpio(27, 'out');
 
-const config = require("../config/config.js")
+const config = require("../config/config.json")
 
 let kiln = new Kiln({
     relays: [relayOne],
@@ -19,7 +19,16 @@ let kiln = new Kiln({
 })
 kiln.init()
 
-router.get("/get-temp", (req, res) => {
+const isLocal = (req, res, next)=>{
+
+    var ip = req.connection.remoteAddress;
+    if (ip === "::1" || ip === "::ffff:172.17.0.1"){
+        next()
+        return
+    }
+};
+
+router.get("/get-temp", isLocal, (req, res) => {
     kiln.getTemp()
     .then(temp => {
         res.send({
@@ -31,16 +40,16 @@ router.get("/get-temp", (req, res) => {
     });
 });
 
-router.get("/get-package", (req, res)=>{
+router.get("/get-package", isLocal, (req, res)=>{
     res.send(kiln.getPackage())
 })
 
-router.get("/stop-firing", (req, res)=>{
+router.get("/stop-firing", isLocal, (req, res)=>{
     kiln.stopFiring()
     res.send({message: "Firing stopped"})
 })
 
-router.post("/start-firing", (req, res)=>{
+router.post("/start-firing", isLocal, (req, res)=>{
     let schedule = req.body.schedule
     if (!schedule) {
         res.send({message:"No schedule provided"})
