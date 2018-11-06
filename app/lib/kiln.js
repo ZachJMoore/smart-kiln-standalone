@@ -237,9 +237,9 @@ class Kiln {
                     .then(temperature => {
                         this.temperature = temperature
                     })
+                    .catch(console.log)
 
             }, 1000)
-                .catch(console.log)
 
             setTimeout(() => {
                 this.temperatureLog.push(this.temperature)
