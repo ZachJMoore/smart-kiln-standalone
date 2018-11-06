@@ -20,11 +20,13 @@ The thermocouple are screwed directly to the amp. Neutral/ground coming back fro
 
 ### Software Setup
 
-After setting up Node js and allowing SPI to be ran on the raspberry pi, in the root directory, run in terminal the following to start the server
+After enabling SPI to be used on the raspberry pi, in the root directory, run in terminal the following to start the server:
 
 ```
-    $npm install
-    $node app/app.js
+    $ curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+    $ sudo apt-get install -y nodejs
+    $ npm install
+    $ node app/app.js
 ```
 
 Help is very welcome, please feel free to make a pull request!
