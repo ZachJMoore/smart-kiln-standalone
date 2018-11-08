@@ -20,7 +20,7 @@ The thermocouple are screwed directly to the amp. Neutral/ground coming back fro
 
 ### Software Setup
 
-After enabling SPI to be used on the raspberry pi, in the root directory, run in terminal the following to start the server:
+After enabling SPI to be used on the raspberry pi, in the smart-kiln-standalone project directory, run in terminal the following to start app:
 
 ```
     $ curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
@@ -28,5 +28,7 @@ After enabling SPI to be used on the raspberry pi, in the root directory, run in
     $ npm install
     $ node app/app.js
 ```
+
+On the Pis browser, navigate to localhost:2222, which will present you with a web app to interface with the kiln. Currently this is locked to only being accessible from the Pi itself for safety reason.
 
 Help is very welcome, please feel free to make a pull request!
