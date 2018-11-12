@@ -24,6 +24,7 @@ app.use("/api/get-schedules", (req, res)=>{
     })
 })
 
-app.use("/", express.static('app/public/'))
+app.use(express.static('app/public/'))
+app.get("*", (request, response) => (response.sendFile(__dirname + '/public/index.html')))
 
 const server = app.listen(port, console.log(new Date() + ": server running on port: " + port));
