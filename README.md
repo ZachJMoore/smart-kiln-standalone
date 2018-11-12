@@ -8,6 +8,7 @@ The repository for the UI of this project can be found <a href="https://github.c
 
 #### Parts:
 - <a href="https://www.amazon.com/gp/product/B07BC6WH7V/ref=oh_aui_detailpage_o00_s00?ie=UTF8&psc=1">Raspberry Pi</a>
+- <a href="https://www.amazon.com/gp/product/B0153R2A9I/ref=oh_aui_search_detailpage?ie=UTF8&psc=1">7" Touchscreen</a>
 - <a href="https://www.amazon.com/gp/product/B06XWN9Q99/ref=oh_aui_detailpage_o00_s00?ie=UTF8&psc=1">SD Card</a>
 - <a href="https://www.amazon.com/gp/product/B0753XW76H/ref=oh_aui_detailpage_o00_s01?ie=UTF8&psc=1">Solid State Relay</a>
 - <a href="https://www.amazon.com/gp/product/B00SK8NDAI/ref=oh_aui_detailpage_o00_s01?ie=UTF8&psc=1">Thermocouple Amplifier</a>
