@@ -34,4 +34,7 @@ After enabling SPI to be used on the raspberry pi, in the smart-kiln-standalone 
 
 On the Pis browser, navigate to localhost:2222, which will present you with a web app to interface with the kiln. Currently this is locked to only being accessible from the Pi itself for safety reason.
 
+You can follow <a href="https://blog.gordonturner.com/2017/12/10/raspberry-pi-full-screen-browser-raspbian-december-2017/">this</a> guide to walk through starting the Pi in kiosk mode.
+
+
 Help is very welcome, please feel free to make a pull request!
