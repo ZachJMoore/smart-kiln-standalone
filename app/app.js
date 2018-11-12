@@ -20,6 +20,6 @@ app.use((req, res, next)=>{
 
 
 app.use("/api/kiln", kilnController);
-app.use("*", express.static('app/public'))
+app.use("/", express.static('app/public/'))
 
 const server = app.listen(port, console.log(new Date() + ": server running on port: " + port));

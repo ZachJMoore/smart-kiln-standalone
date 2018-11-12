@@ -28,11 +28,11 @@ const isLocal = (req, res, next)=>{
     }
 };
 
-router.get("/get-temp", isLocal, (req, res) => {
-    kiln.getTemp()
-    .then(temp => {
+router.get("/get-temperature", isLocal, (req, res) => {
+    kiln.getTemperature()
+    .then(temperature => {
         res.send({
-            temp: temp
+            temperature: temperature
         });
     })
     .catch(error => {

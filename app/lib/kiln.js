@@ -81,7 +81,7 @@ class Kiln {
         this.config = object.config
         this.debug = object.debug
 
-        this.getTemp = () => {
+        this.getTemperature = () => {
             return new Promise((resolve, reject) => {
                 thermoSensor.readTempC((temperature) => {
                     //if invalid reading, reject
@@ -233,7 +233,7 @@ class Kiln {
 
             setInterval(() => {
 
-                this.getTemp()
+                this.getTemperature()
                     .then(temperature => {
                         this.temperature = temperature
                     })
