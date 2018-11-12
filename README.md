@@ -2,6 +2,8 @@
 
 This is a standalone version of the "Smart Kiln" project with no online access.
 
+The repository for the UI of this project can be found <a href="https://github.com/ZachJMoore/smart-kiln-standalone-ui">here</a>.
+
 ## Hardware Setup
 
 #### Parts:
