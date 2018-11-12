@@ -1,16 +1,8 @@
+const fs = require("fs");
 const express = require("express");
 const app = express();
 const kilnController = require("./routes/kilnController")
 const port = 2222;
-
-const isLocal = (req, res, next)=>{
-
-    var ip = req.connection.remoteAddress;
-    if (ip === "::1" || ip === "::ffff:172.17.0.1"){
-        next()
-        return res.status(403).send("invalid client")
-    }
-};
 
 app.use((req, res, next)=>{
     res.header("Access-Control-Allow-Origin", "*");
@@ -18,8 +10,20 @@ app.use((req, res, next)=>{
     next();
 })
 
-
 app.use("/api/kiln", kilnController);
+
+app.use("/api/get-schedules", (req, res)=>{
+    fs.readFile("app/config/firingSchedules.json", "utf8", (error, data) => {
+        if (error){
+            console.log("error: ", error)
+            res.status(500).send()
+        } else {
+            data = JSON.parse(data)
+            res.send(data)
+        }
+    })
+})
+
 app.use("/", express.static('app/public/'))
 
 const server = app.listen(port, console.log(new Date() + ": server running on port: " + port));
