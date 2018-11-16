@@ -5,36 +5,28 @@ const fs = require("fs")
 ROOT_APP_PATH = fs.realpathSync('.');
 console.log(`Root App File Path: ${ROOT_APP_PATH}`);
 
-// PID Constructor Passed Object:
-// {
-//     temperatureOffset: 0, // Temperature Offset used for calibrating thermocouple
-//     setRelays: this.kiln.setRelays, // function which receives a 1 or 0 to turn on or off the relays
-//     temperature: this.kiln.temperature, // pass a reference to the temperature of the kiln
-//     debug: false
-// }
-
 class PID {
-    constructor(object) {
+    constructor(kiln, temperatureOffset) {
         this.target = 0
-        this.temperature = object.temperature
-        this.temperatureOffset = object.temperatureOffset || 0
-        this.setRelays = object.setRelays // pass this function a 1 or 0 to turn on or off the relays
-        this.debug = object.debug || false
+        this.kiln = kiln
+        this.temperatureOffset = temperatureOffset || 0
+        this.setRelays = kiln.setRelays.bind(kiln) // pass this function a 1 or 0 to turn on or off the relays
+        this.debug = kiln.debug || false
         this.PIDInterval
 
         this.holdTarget = () => {
             clearInterval(this.PIDInterval)
             this.PIDInterval = setInterval(() => {
 
-                if ((this.temperature - this.temperatureOffset) >= this.target) {
+                if ((this.kiln.temperature - this.temperatureOffset) >= this.target) {
                     this.setRelays(0)
                 }
 
-                if ((this.temperature - this.temperatureOffset) < this.target) {
+                if ((this.kiln.temperature - this.temperatureOffset) < this.target) {
                     this.setRelays(1)
                 }
 
-                this.debug && console.log("Temperature: ", this.temperature, "Target: ", this.target)
+                this.debug && console.log("Temperature: ", this.kiln.temperature, "Target: ", this.target)
 
             }, 1000)
         }
@@ -44,7 +36,7 @@ class PID {
         }
 
         this.increaseTarget = (increase) => {
-            this.target = this.target = increase
+            this.target = this.target + increase
         }
 
         this.startPID = () => {
@@ -120,7 +112,7 @@ class Kiln {
 
                 this.isFiring = true
                 this.currentSchedule = firingSchedule
-                this.firingScheduleInstance = this.fireSchedule(schedule)
+                this.firingScheduleInstance = this.fireSchedule(firingSchedule)
                 this.firingScheduleInstance.next()
 
             }
@@ -137,7 +129,7 @@ class Kiln {
                 return
             }
 
-            this.controller.setTarget(this.temp)
+            this.controller.setTarget(this.temperature)
             this.controller.startPID()
 
             let endFiring = () => {
@@ -148,7 +140,17 @@ class Kiln {
                 this.stopFiring()
             }
 
-            for (ramp in schedule.ramps){
+            console.log(schedule.ramps)
+
+            for(let e = 0; e < schedule.ramps.length; e++){
+
+                let ramp = schedule.ramps[e]
+
+                ramp = {
+                    rate: parseFloat(ramp.rate),
+                    target: parseFloat(ramp.target),
+                    hold: parseFloat(ramp.hold),
+                }
 
                 let isDownRamp = false
                 let difference = ramp.target - this.temperature
@@ -158,7 +160,9 @@ class Kiln {
                     difference = Math.abs(difference)
                 }
 
-                let risePerSecond = (difference / ramp.rate) * 60 * 60
+                let hoursNeeded = difference / ramp.rate;
+                let secondsNeeded = hoursNeeded * 60 * 60;
+                let risePerSecond = difference / secondsNeeded;
 
                 if (isDownRamp){
                     risePerSecond = -risePerSecond
@@ -224,12 +228,7 @@ class Kiln {
 
         this.init = () => {
             this.setRelays(0) //set all relays off
-            this.controller = new PID({
-                temperatureOffset: this.config.temperatureOffset,
-                setRelays: this.setRelays,
-                temperature: this.temperature,
-                debug: this.debug
-            })
+            this.controller = new PID(this, this.config.temperatureOffset)
 
             setInterval(() => {
 
