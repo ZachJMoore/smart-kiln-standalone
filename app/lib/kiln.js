@@ -1,6 +1,11 @@
-const max31855 = require('./max31855');
-const thermoSensor = new max31855();
 const fs = require("fs")
+
+let max31855, thermoSensor;
+
+if (process.env.NODE_ENV !== "development"){
+    max31855 = require('./max31855');
+    thermoSensor = new max31855();
+}
 
 ROOT_APP_PATH = fs.realpathSync('.');
 console.log(`Root App File Path: ${ROOT_APP_PATH}`);
@@ -75,16 +80,24 @@ class Kiln {
 
         this.getTemperature = () => {
             return new Promise((resolve, reject) => {
-                thermoSensor.readTempC((temperature) => {
-                    //if invalid reading, reject
-                    if (isNaN(temperature)) {
-                        reject("thermocouple may be broken or not attached");
+                if (process.env.NODE_ENV !== "development"){
+                    thermoSensor.readTempC((temperature) => {
+                        //if invalid reading, reject
+                        if (isNaN(temperature)) {
+                            reject("thermocouple may be broken or not attached");
+                        } else {
+                            //else, resolve temperature converted to fahrenheit
+                            let temperatureF = parseFloat(((temperature * 1.8) + 32).toFixed(2))
+                            resolve(temperatureF)
+                        }
+                    })
+                } else {
+                    if ((Math.random()*10).toFixed(0) % 2){
+                        resolve(80+1)
                     } else {
-                        //else, resolve temperature converted to fahrenheit
-                        let temperatureF = parseFloat(((temperature * 1.8) + 32).toFixed(2))
-                        resolve(temperatureF)
+                        resolve(80+2)
                     }
-                })
+                }
             })
         }
 

@@ -7,16 +7,28 @@ router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 
 const Kiln = require('../lib/kiln');
-const Gpio = require('onoff').Gpio;
-const relayOne = new Gpio(27, 'out');
 
 const config = require("../config/config.json")
 
-let kiln = new Kiln({
-    relays: [relayOne],
-    debug: true,
-    config: config
-})
+let kiln;
+
+if (process.env.NODE_ENV !== "development"){
+    const Gpio = require('onoff').Gpio;
+    const relayOne = new Gpio(27, 'out');
+    
+    kiln = new Kiln({
+        relays: [relayOne],
+        debug: true,
+        config: config
+    })
+} else {
+    kiln = new Kiln({
+        relays: [],
+        debug: true,
+        config: config
+    })
+}
+
 kiln.init()
 
 const isLocal = (req, res, next)=>{
