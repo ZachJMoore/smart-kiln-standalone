@@ -192,7 +192,11 @@ class Kiln {
                     if (!isDownRamp){
 
                         if (this.temperature < ramp.target){
-                            this.controller.increaseTarget(risePerSecond)
+                            if (this.controller.target < ramp.target){
+                                this.controller.increaseTarget(risePerSecond)
+                            } else {
+                                this.controller.setTarget(ramp.target)
+                            }
                         } else {
                             clearInterval(this.increaseInterval)
                             this.controller.setTarget(ramp.target)
@@ -209,7 +213,11 @@ class Kiln {
                     } else {
 
                         if (this.temperature > ramp.target){
-                            this.controller.increaseTarget(risePerSecond)
+                            if (this.controller.target > ramp.target){
+                                this.controller.increaseTarget(risePerSecond)
+                            } else {
+                                this.controller.setTarget(ramp.target)
+                            }
                         } else {
                             clearInterval(this.increaseInterval)
                             this.controller.setTarget(ramp.target)
