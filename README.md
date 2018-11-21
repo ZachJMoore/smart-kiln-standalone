@@ -43,7 +43,7 @@ For developing locally without a Raspberry Pi, you can run the app in developmen
 Run the following command in the root of the project directory to start testing:
 
 ```
-    $ NODE_ENV=development node app/app.js
+    $ NODE_ENV=development DEBUG=false node app/app.js
 ```
 
 
