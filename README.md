@@ -29,7 +29,7 @@ After enabling SPI to be used on the raspberry pi, in the smart-kiln-standalone 
     $ curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
     $ sudo apt-get install -y nodejs
     $ npm install
-    $ node app/app.js
+    $ NODE_ENV=production DEBUG=false node app/app.js
 ```
 
 On the Pis browser, navigate to localhost:2222, which will present you with a web app to interface with the kiln. Currently this is locked to only being accessible from the Pi itself for safety reason.
