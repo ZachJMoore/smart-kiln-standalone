@@ -13,10 +13,9 @@ const config = require("../config/config.json")
 let kiln;
 
 let isDevelopment = process.env.NODE_ENV === "development"
-let isProduction = process.env.NODE_ENV === "production"
 let isDebug = process.env.DEBUG === "true" || process.env.DEBUG === "True"
 
-if (isProduction){
+if (!isDevelopment){
     const Gpio = require('onoff').Gpio;
     const relayOne = new Gpio(27, 'out');
 
