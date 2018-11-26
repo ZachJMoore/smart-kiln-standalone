@@ -31,5 +31,5 @@ let isDebug = process.env.DEBUG === "true"
 
 const server = app.listen(port, ()=>{
     console.log(new Date() + ": server running on port: " + port)
-    console.log(`Server is started in: ${process.env.NODE_ENV} mode. Debug is ${isDebug ? "on" : "off"}`)
+    console.log(`Server is started in ${process.env.NODE_ENV} mode with debug ${isDebug ? "on" : "off"}`)
 });
