@@ -15,7 +15,6 @@ class PID {
         this.target = 0
         this.kiln = kiln
         this.temperatureOffset = temperatureOffset || 0
-        this.setRelays = kiln.setRelays.bind(kiln) // pass this function a 1 or 0 to turn on or off the relays
         this.debug = kiln.debug || false
         this.PIDInterval
 
@@ -24,11 +23,11 @@ class PID {
             this.PIDInterval = setInterval(() => {
 
                 if ((this.kiln.temperature - this.temperatureOffset) >= this.target) {
-                    this.setRelays(0)
+                    this.kiln.setRelays(0)
                 }
 
                 if ((this.kiln.temperature - this.temperatureOffset) < this.target) {
-                    this.setRelays(1)
+                    this.kiln.setRelays(1)
                 }
 
                 this.debug && console.log("Temperature: ", this.kiln.temperature, "Target: ", this.target)
@@ -51,7 +50,7 @@ class PID {
 
         this.stopPID = () => {
             clearInterval(this.PIDInterval)
-            this.setRelays(0)
+            this.kiln.setRelays(0)
         }
 
     }
@@ -80,7 +79,7 @@ class Kiln {
 
         this.getTemperature = () => {
             return new Promise((resolve, reject) => {
-                if (process.env.NODE_ENV !== "development"){
+                if (process.env.NODE_ENV === "production"){
                     thermoSensor.readTempC((temperature) => {
                         //if invalid reading, reject
                         if (isNaN(temperature)) {
@@ -112,7 +111,7 @@ class Kiln {
 
         this.setRelays = (value) => {
 
-            value === 1 ? value = true : value = false
+            value === 1 ? value = 1 : value = 0
 
             this.relays.forEach(relay => {
                 relay.writeSync(value)
