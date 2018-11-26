@@ -22,12 +22,14 @@ class PID {
             clearInterval(this.PIDInterval)
             this.PIDInterval = setInterval(() => {
 
-                if ((this.kiln.temperature - this.temperatureOffset) >= this.target) {
+                if ((this.kiln.temperature - this.temperatureOffset) >= this.target && this.kiln.checkRelays() === true) {
                     this.kiln.setRelays(0)
+                    this.debug && console.log("relay set off")
                 }
 
-                if ((this.kiln.temperature - this.temperatureOffset) < this.target) {
+                if ((this.kiln.temperature - this.temperatureOffset) < this.target && this.kiln.checkRelays() === false) {
                     this.kiln.setRelays(1)
+                    this.debug && console.log("relay set on")
                 }
 
                 this.debug && console.log("Temperature: ", this.kiln.temperature, "Target: ", this.target)
@@ -60,7 +62,7 @@ class PID {
 // Kiln Class Constructor Object example
 
 // {
-//     relays: ["relays", "hooked", "to", "kiln"],
+//     relays: [onOffGPIO],
 //     debug: false,
 //     config: config // see config/default-config.json
 // }
@@ -116,6 +118,19 @@ class Kiln {
             this.relays.forEach(relay => {
                 relay.writeSync(value)
             })
+        }
+
+        this.checkRelays = () => {
+
+            let isOn = false
+
+            this.relays.forEach(relay => {
+                if (relay.readSync() === 1){
+                    isOn = true
+                }
+            })
+
+            return isOn
         }
 
         this.startFiring = (firingSchedule) => {
@@ -181,12 +196,15 @@ class Kiln {
                 }
 
                 if (this.debug){
+                    console.log("Entering ramp: ", e+1)
                     console.log("Current Temperature: ", this.temperature)
                     console.log("Target Temperature: ", ramp.target)
                     console.log("Rise Per Second: ", risePerSecond)
                 }
 
                 this.increaseInterval = setInterval(()=>{
+
+                    // TODO: Make sure that the elements do not heat to quickly and start the hold or next ramp if the PID target value has not reached the ramp target yet.
 
                     if (!isDownRamp){
 
@@ -199,6 +217,8 @@ class Kiln {
                         } else {
                             clearInterval(this.increaseInterval)
                             this.controller.setTarget(ramp.target)
+
+                            this.debug && console.log(`entering hold for ${ramp.hold*60} minutes`)
                             this.holdTimeout = setTimeout(()=>{
 
                                 if (this.firingScheduleInstance.next().done){
@@ -220,6 +240,8 @@ class Kiln {
                         } else {
                             clearInterval(this.increaseInterval)
                             this.controller.setTarget(ramp.target)
+
+                            this.debug && console.log(`entering hold for ${ramp.hold*60} minutes`)
                             this.holdTimeout = setTimeout(()=>{
 
                                 if (this.firingScheduleInstance.next().done){
@@ -234,6 +256,7 @@ class Kiln {
 
                 }, 1000)
 
+                clearInterval(this.firingScheduleCheckInterval)
                 this.firingScheduleCheckInterval = setInterval(()=>{
 
                     if (this.isFiring === false){
