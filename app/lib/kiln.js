@@ -2,7 +2,7 @@ const fs = require("fs")
 
 let max31855, thermoSensor;
 
-if (process.env.NODE_ENV !== "development"){
+if (process.env.FAKE_DATA === "false"){
     max31855 = require('./max31855');
     thermoSensor = new max31855();
 }
@@ -81,7 +81,7 @@ class Kiln {
 
         this.getTemperature = () => {
             return new Promise((resolve, reject) => {
-                if (process.env.NODE_ENV === "production"){
+                if (process.env.FAKE_DATA === "false"){
                     thermoSensor.readTempC((temperature) => {
                         //if invalid reading, reject
                         if (isNaN(temperature)) {

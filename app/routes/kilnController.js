@@ -1,5 +1,3 @@
-//kiln controller
-
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
@@ -11,12 +9,10 @@ const Kiln = require('../lib/kiln');
 const config = require("../config/config.json")
 
 let kiln;
-
-let isDevelopment = process.env.NODE_ENV === "development"
-let isProduction = process.env.NODE_ENV === "production"
+let isFakeData = process.env.FAKE_DATA === "true"
 let isDebug = process.env.DEBUG === "true"
 
-if (isProduction){
+if (!isFakeData){
     const Gpio = require('onoff').Gpio;
     const relayOne = new Gpio(27, 'out');
 
@@ -25,7 +21,7 @@ if (isProduction){
         debug: isDebug,
         config: config
     })
-} else if (isDevelopment){
+} else {
     kiln = new Kiln({
         relays: [],
         debug: isDebug,

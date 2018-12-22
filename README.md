@@ -29,7 +29,8 @@ After enabling SPI to be used on the raspberry pi, in the smart-kiln-standalone 
     $ curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
     $ sudo apt-get install -y nodejs
     $ npm install
-    $ NODE_ENV=production DEBUG=false node app/app.js
+    $ mv .env.example .env
+    $ node app/app.js
 ```
 
 On the Pis browser, navigate to localhost:2222, which will present you with a web app to interface with the kiln. Currently this is locked to only being accessible from the Pi itself for safety reason.
@@ -38,12 +39,12 @@ You can follow <a href="https://blog.gordonturner.com/2017/12/10/raspberry-pi-fu
 
 ### Development
 
-For developing locally without a Raspberry Pi, you can run the app in development mode. This is mostly useful for debugging the UI aspect as well as testing out features that do not have a need for access to a real temperature input from a thermocouple.
+For developing locally without a Raspberry Pi, you can run the app in FAKE_DATA mode. This is mostly useful for debugging the UI aspect as well as testing out features that do not have a need for access to a real temperature input from a thermocouple.
 
-Run the following command in the root of the project directory to start testing:
+Simply edit the FAKE_DATA and set it to true in the .env file, then start the app like normal with the following command:
 
 ```
-    $ NODE_ENV=development DEBUG=true node app/app.js
+    $node app/app.js
 ```
 
 
