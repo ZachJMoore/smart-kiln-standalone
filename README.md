@@ -1,3 +1,5 @@
+This repository is now archived and is no longer maintained. This project has been superseded by https://github.com/ZachJMoore/smart-kiln-hardware
+
 ## Smart Kiln (standalone version)
 
 This is a standalone version of the "Smart Kiln" project with no online access.
