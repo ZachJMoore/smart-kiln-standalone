@@ -31,13 +31,21 @@ After enabling SPI to be used on the raspberry pi, in the smart-kiln-standalone 
     $ curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
     $ sudo apt-get install -y nodejs
     $ npm install
-    $ mv .env.example .env
     $ node app/app.js
 ```
 
 On the Pis browser, navigate to localhost:2222, which will present you with a web app to interface with the kiln. Currently this is locked to only being accessible from the Pi itself for safety reason.
 
 You can follow <a href="https://blog.gordonturner.com/2017/12/10/raspberry-pi-full-screen-browser-raspbian-december-2017/">this</a> guide to walk through starting the Pi in kiosk mode.
+
+You can also run it in Docker using the following:
+
+```
+    $ curl -fsSL get.docker.com -o get-docker.sh && sh get-docker.sh
+    $ usermod -a -G docker
+    $ docker build -t smart-kiln .
+    $ docker run -d -p 2222:2222 --restart=always --privileged --name sk-server smart-kiln
+```
 
 ### Development
 
