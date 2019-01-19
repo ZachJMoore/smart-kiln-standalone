@@ -1,112 +1,135 @@
 {
-    "175c3d91f35ca200": {
-        "date": "1524787689554",
-        "id": "175c3d91f35ca200",
-        "name": "F/26 Long Holds",
+    "1": {
+        "id": "1",
+        "name": "Bisque (dry)",
         "ramps": [
             {
-                "rate": "500",
-                "target": "2100",
-                "hold": "0"
-            },
-            {
-                "rate": "135",
-                "target": "2225",
-                "hold": ".05"
-            },
-            {
-                "rate": "500",
-                "target": "1900",
-                "hold": "0"
-            },
-            {
-                "rate": "500",
-                "target": "1930",
-                "hold": "2.5"
-            },
-            {
-                "rate": "300",
-                "target": "1850",
+                "rate": "100",
+                "target": "200",
                 "hold": "1"
             },
             {
-                "rate": "300",
-                "target": "1800",
+                "rate": "100",
+                "target": "250",
+                "hold": "1"
+            },
+            {
+                "rate": "200",
+                "target": "1000",
                 "hold": "0"
             },
             {
-                "rate": "240",
-                "target": "600",
+                "rate": "100",
+                "target": "1200",
+                "hold": "0"
+            },
+            {
+                "rate": "250",
+                "target": "1700",
+                "hold": "0"
+            },
+            {
+                "rate": "108",
+                "target": "1823",
                 "hold": "0"
             }
         ]
     },
-    "1a0663a357b93a000": {
-        "date": "1524760886705",
-        "id": "1a0663a357b93a000",
-        "name": "Crystalline Cone 6 (F/26)",
+    "2": {
+        "id": "2",
+        "name": "Bisque (wet)",
         "ramps": [
             {
-                "rate": "500",
-                "target": "2100",
-                "hold": "0"
-            },
-            {
-                "rate": "135",
-                "target": "2225",
-                "hold": ".05"
-            },
-            {
-                "rate": "500",
-                "target": "1900",
-                "hold": "0"
-            },
-            {
-                "rate": "500",
-                "target": "1930",
+                "rate": "50",
+                "target": "200",
                 "hold": "2"
             },
             {
-                "rate": "300",
-                "target": "1850",
-                "hold": ".45"
+                "rate": "50",
+                "target": "250",
+                "hold": "2"
             },
             {
-                "rate": "300",
-                "target": "1800",
+                "rate": "150",
+                "target": "1000",
                 "hold": "0"
             },
             {
-                "rate": "240",
-                "target": "600",
+                "rate": "100",
+                "target": "1200",
+                "hold": "0"
+            },
+            {
+                "rate": "250",
+                "target": "1700",
+                "hold": "0"
+            },
+            {
+                "rate": "108",
+                "target": "1823",
                 "hold": "0"
             }
         ]
     },
-    "40c42b537c9030000": {
-        "date": "1531936032735",
-        "id": "40c42b537c9030000",
-        "name": "Test",
+    "3": {
+        "id": "3",
+        "name": "Bisque (sculpture)",
         "ramps": [
             {
-                "rate": "500",
-                "target": "90",
-                "hold": ".01"
+                "rate": "50",
+                "target": "200",
+                "hold": "3"
             },
             {
-                "rate": "500",
-                "target": "100",
-                "hold": ".01"
+                "rate": "25",
+                "target": "250",
+                "hold": "3"
             },
             {
-                "rate": "500",
-                "target": "120",
-                "hold": ".01"
+                "rate": "100",
+                "target": "600",
+                "hold": "0"
             },
             {
-                "rate": "500",
-                "target": "110",
-                "hold": ".01"
+                "rate": "150",
+                "target": "1000",
+                "hold": "0"
+            },
+            {
+                "rate": "75",
+                "target": "1200",
+                "hold": "0"
+            },
+            {
+                "rate": "150",
+                "target": "1700",
+                "hold": "0"
+            },
+            {
+                "rate": "108",
+                "target": "1823",
+                "hold": "0"
+            }
+        ]
+    },
+    "4": {
+        "id": "4",
+        "name": "Glaze (cone 6)",
+        "ramps": [
+            {
+                "rate": "200",
+                "target": "250",
+                "hold": "0.25"
+            },
+            {
+                "rate": "400",
+                "target": "1982",
+                "hold": "0"
+            },
+            {
+                "rate": "120",
+                "target": "2212",
+                "hold": "0"
             }
         ]
     }
